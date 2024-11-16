@@ -1,0 +1,10 @@
+prometheus-fastapi-instrumentator==7.0.0
+fastapi==0.111.0
+uvicorn==0.29.0
+numpy
+pydantic>=1.8.0,<2.0.0
+category_encoders==2.6.4
+pandas==2.0.1
+scikit-learn==1.4.1.post1
+catboost==1.2.2
+requests
