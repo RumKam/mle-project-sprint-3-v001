@@ -4,8 +4,8 @@ from fastapi import FastAPI, Body
 from fast_api_handler import FastApiHandler
 
 """
-Пример запуска из директории mle-sprint3/app:
-uvicorn churn_app:app --reload --port 8081 --host 0.0.0.0
+Пример запуска из директории mle-project-sprint-3-v001/services/ml_service:
+uvicorn real_estate_app:app --reload --port 8081 --host 0.0.0.0
 
 Для просмотра документации API и совершения тестовых запросов зайти на http://127.0.0.1:8081/docs
 

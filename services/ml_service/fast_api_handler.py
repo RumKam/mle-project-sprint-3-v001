@@ -16,7 +16,7 @@ class FastApiHandler:
             "model_params": dict
         }
 
-        self.model_path = "models/model_best.pkl"
+        self.model_path = "../models/model_best.pkl"
         self.load_real_estate_model(model_path=self.model_path)
         
         # необходимые параметры для предсказаний модели оттока
@@ -53,6 +53,7 @@ class FastApiHandler:
           #  self.model = CatBoostRegressor()
           #  self.model.load_model(model_path)
             self.model = model
+            print(f"Model loaded. Success.: {e}")
         except Exception as e:
             print(f"Failed to load model: {e}")
 
@@ -150,28 +151,28 @@ if __name__ == "__main__":
     test_params = {
         "user_id": "1",
         "model_params": {
-          'cat__building_type_int_4': 1.0,
-          'cat__building_type_int_6': 0.0,
-          'cat__building_type_int_1': 0.0,
-          'cat__cluster_region_2': 0.0,
-          'cat__cluster_region_1': 1.0,
-          'exp(sqrt(distance_to_center) - sqrt(longitude))': 0.111202,
-          'num__rb__longitude': 1.158362,
-          'num__rb__ceiling_height': 0.0,
-          'num__rb__floor': 0.166667,
-          'cat__cluster_region_3': 0.0,
-          'cat__building_type_int_2': 0.0,
-          'num__pol__1': 1.0,
-          'num__pol__ceiling_height total_area': 123.816009,
-          'cat__building_type_int_3': 0.0,
-          'num__kbd__total_area': 1.0,
-          'exp(-distance_to_center + sqrt(longitude))': 0.000075,
-          'num__rb__build_year': -0.181818,
-          'num__pol__ceiling_height': 2.640000,
-          'num__pol__ceiling_height total_area^2': 5806.971009,
-          'num__kbd__ceiling_height': 1.0,
-          'num__pol__total_area^3': 103161.719069,
-          'num__rb__flats_count': 0.338624
+          "cat__building_type_int_4": 1.0,
+          "cat__building_type_int_6": 0.0,
+          "cat__building_type_int_1": 0.0,
+          "cat__cluster_region_2": 0.0,
+          "cat__cluster_region_1": 1.0,
+          "exp(sqrt(distance_to_center) - sqrt(longitude))": 0.111202,
+          "num__rb__longitude": 1.158362,
+          "num__rb__ceiling_height": 0.0,
+          "num__rb__floor": 0.166667,
+          "cat__cluster_region_3": 0.0,
+          "cat__building_type_int_2": 0.0,
+          "num__pol__1": 1.0,
+          "num__pol__ceiling_height total_area": 123.816009,
+          "cat__building_type_int_3": 0.0,
+          "num__kbd__total_area": 1.0,
+          "exp(-distance_to_center + sqrt(longitude))": 0.000075,
+          "num__rb__build_year": -0.181818,
+          "num__pol__ceiling_height": 2.640000,
+          "num__pol__ceiling_height total_area^2": 5806.971009,
+          "num__kbd__ceiling_height": 1.0,
+          "num__pol__total_area^3": 103161.719069,
+          "num__rb__flats_count": 0.338624
       }
     }
 
