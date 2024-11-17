@@ -5,14 +5,26 @@
 
 ## 1. FastAPI микросервис в виртуальном окружение
 ```python
-# команды создания виртуального окружения
-# и установки необходимых библиотек в него
-
+# клонирование директории
+git clone https://github.com/RumKam/mle-project-sprint-3-v001.git
+cd mle-project-sprint-3-v001/services
+# обновление локального индекса пакетов
+sudo apt-get update
+# установка расширения для виртуального пространства
+sudo apt-get install python3.10-venv
+# создание виртуального пространства
+python3.10 -m venv .venv_project_name 
+# активация окружения
+source .venv_project_name/bin/activate 
+# установка пакетов
+pip install -r requirements.txt
 
 # команда перехода в директорию
-
+cd mle-project-sprint-3-v001/services/ml_service
 
 # команда запуска сервиса с помощью uvicorn
+```
+uvicorn real_estate_app:app --reload --port 8081 --host 0.0.0.0
 ```
 
 ### Пример curl-запроса к микросервису
@@ -21,7 +33,7 @@
 curl -X 'POST' \
   'http://localhost:...' \
 ```
-
+Для просмотра документации API и совершения тестовых запросов зайти на http://127.0.0.1:8081/docs
 
 ## 2. FastAPI микросервис в Docker-контейнере
 

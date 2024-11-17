@@ -50,8 +50,7 @@ class FastApiHandler:
         try:
             with open(model_path, "rb") as f:
                  model = pickle.load(f)
-          #  self.model = CatBoostRegressor()
-          #  self.model.load_model(model_path)
+                 
             self.model = model
             print(f"Model loaded. Success.: {e}")
         except Exception as e:

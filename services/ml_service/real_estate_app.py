@@ -1,16 +1,11 @@
 """FastAPI-приложение для модели предсказания цены."""
 
 from fastapi import FastAPI, Body
-from fast_api_handler import FastApiHandler
-
-"""
-Пример запуска из директории mle-project-sprint-3-v001/services/ml_service:
-uvicorn real_estate_app:app --reload --port 8081 --host 0.0.0.0
-
-Для просмотра документации API и совершения тестовых запросов зайти на http://127.0.0.1:8081/docs
-
-Если используется другой порт, то заменить 8081 на этот порт
-"""
+# Если запускать приложение из контейнера, только с . импортируется обработчик
+try:
+    from fast_api_handler import FastApiHandler
+except:
+    from .fast_api_handler import FastApiHandler
 
 # создаём FastAPI-приложение 
 app = FastAPI()
