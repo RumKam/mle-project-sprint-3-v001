@@ -1,7 +1,5 @@
 
 """Класс FastApiHandler, который обрабатывает запросы API."""
-
-from catboost import CatBoostRegressor
 import pickle
 
 class FastApiHandler:

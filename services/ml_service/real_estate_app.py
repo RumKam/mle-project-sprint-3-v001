@@ -38,15 +38,6 @@ app_prediction_time = Histogram(
     buckets=(0.1, 0.3, 0.5, 1, 3, 5)
 )
 
-app_predictions = Histogram(
-    # имя метрики
-    "app_predictions",
-    #описание метрики
-    "Histogram of predictions",
-    #указазываем корзины для гистограммы
-    buckets=(1, 2, 4, 5, 10)
-)
-
 @app.post("/test_real_estate_app/") 
 def test_get_prediction_for_item(
     user_id: str,
@@ -104,7 +95,3 @@ def test_get_prediction_for_item(
     app_prediction_time.observe(response_time)
 
     return response
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=4601)

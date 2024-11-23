@@ -67,16 +67,21 @@ curl -X 'POST' \
 cd mle-project-sprint-3-v001/services
 
 # команда для запуска микросервиса в режиме без docker compose
-docker image build . --tag test_real_estate_app
-docker container run --publish 4601 --volume=./models:/services/models  --env-file .env test_real_estate_app
-# команда для запуска микросервиса в режиме docker compose
-docker compose up  --build
+docker image build . --tag test_real_estate_app -f Dockerfile_ml_service
+docker container run --publish 4601:4601 --env-file .env --volume=./models:/models test_real_estate_app
+
+# Проверить доступ
+http://localhost:4601/docs
+
 # проверка статуса контейнера
 docker container ls -a | grep test_real_estate_app
 # остановка контейнера
-docker stop test_real_estate_app
+docker stop <ID контейнера>
 # удаление контейнера
-docker rm test_real_estate_app
+docker rm <ID контейнера>
+
+# команда для запуска микросервиса в режиме docker compose
+docker compose up  --build
 ```
 
 ### Пример curl-запроса к микросервису
@@ -159,7 +164,7 @@ curl -X 'POST' \
 ```
 
 ## 4. Скрипт симуляции нагрузки
-Скрипт генерирует 20 запросов в течение 70 секунд
+Скрипт генерирует 30 запросов
 
 ```
 # команды необходимые для запуска скрипта
