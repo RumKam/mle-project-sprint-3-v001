@@ -28,14 +28,14 @@ app_predictions = Histogram(
     #описание метрики
     "Histogram of predictions",
     #указаываем корзины для гистограммы
-    buckets=(1e6, 3e6, 5e6, 7e6, 1e7, 3e7, 5e7, 7e8)
+    buckets=(4e6, 8.5e6, 9e6, 9.5e6, 1e7, 3e7, 5e7)
 )
 
 # создаем гистограмму для времени отклика
 app_prediction_time = Histogram(
     "prediction_time_seconds",
     "Histogram of prediction time (seconds)",
-    buckets=(0.1, 0.3, 0.5, 1, 3, 5)
+    buckets=(0.1, 0.5, 1.0, 3.0, 5.0, 10.0)
 )
 
 @app.post("/test_real_estate_app/") 
