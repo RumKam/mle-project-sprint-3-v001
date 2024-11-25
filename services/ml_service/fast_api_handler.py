@@ -15,12 +15,13 @@ class FastApiHandler:
             "model_params": dict
         }
 
-        # Проверка корректности загрузки модели в функции load_real_estate_model
+        # Проверка корректности загрузки модели есть в функции load_real_estate_model
         self.model_path = "../models/model_best.pkl"
         self.load_real_estate_model(model_path=self.model_path)
         
         # Необходимые параметры для предсказаний модели оттока
-        self.config_path = "../param/required_params.json"
+        # Я не стала монтировать еще один volume для параметров, положила к модели
+        self.config_path = "../models/required_params.json"
         self.load_config(config_path=self.config_path)
 
     def load_real_estate_model(self, model_path: str):
