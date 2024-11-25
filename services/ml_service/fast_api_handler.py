@@ -1,6 +1,7 @@
 
 """Класс FastApiHandler, который обрабатывает запросы API."""
 import pickle
+import json
 
 class FastApiHandler:
     """Класс FastApiHandler, который обрабатывает запрос и возвращает предсказание."""
@@ -14,34 +15,13 @@ class FastApiHandler:
             "model_params": dict
         }
 
+        # Проверка корректности загрузки модели в функции load_real_estate_model
         self.model_path = "../models/model_best.pkl"
         self.load_real_estate_model(model_path=self.model_path)
         
-        # необходимые параметры для предсказаний модели оттока
-        self.required_model_params = [
-                'cat__building_type_int_4',
-                'cat__building_type_int_6',
-                'cat__building_type_int_1',
-                'cat__cluster_region_2',
-                'cat__cluster_region_1',
-                'exp(sqrt(distance_to_center) - sqrt(longitude))',
-                'num__rb__longitude',
-                'num__rb__ceiling_height',
-                'num__rb__floor',
-                'cat__cluster_region_3',
-                'cat__building_type_int_2',
-                'num__pol__1',
-                'num__pol__ceiling_height total_area',
-                'cat__building_type_int_3',
-                'num__kbd__total_area',
-                'exp(-distance_to_center + sqrt(longitude))',
-                'num__rb__build_year',
-                'num__pol__ceiling_height',
-                'num__pol__ceiling_height total_area^2',
-                'num__kbd__ceiling_height',
-                'num__pol__total_area^3',
-                'num__rb__flats_count'
-            ]
+        # Необходимые параметры для предсказаний модели оттока
+        self.config_path = "../param/required_params.json"
+        self.load_config(config_path=self.config_path)
 
     def load_real_estate_model(self, model_path: str):
 
@@ -50,9 +30,29 @@ class FastApiHandler:
                  model = pickle.load(f)
                  
             self.model = model
-            print(f"Model loaded. Success.: {e}")
+            print(f"Model loaded. Success")
+        # Добавила конкретизацию ошибки
+        except EOFError as e:
+             print(f"Error: Reached end of file - {e}")
+        except pickle.PickleError as e:
+             print(f"Error: Pickle error - {e}")
         except Exception as e:
-            print(f"Failed to load model: {e}")
+             print(f"An unexpected error occurred: {e}")
+
+    # Функция для загрузки параметров из json
+    def load_config(self, config_path: str):
+
+        try:
+            with open(config_path, 'r') as f:
+                 config = json.load(f)
+
+            self.required_model_params = config["required_model_params"]
+            print(f"Parameters example loaded. Success")
+            
+        except FileNotFoundError as e:
+             print(f"Error: File not found - {e}")
+        except Exception as e:
+            print(f"Failed to load parameters: {e}")
 
     def real_estate_predict(self, model_params: dict) -> float:
         """Предсказываем цену недвижимости.
@@ -111,9 +111,11 @@ class FastApiHandler:
             print("Not all model params exist")
             return False
         return True
-        
+    
+    #  Разбила обработку запроса на две функции
     def handle(self, params):
-            """Функция для обработки входящих запросов по API. Запрос состоит из параметров.
+
+        """Функция для обработки входящих запросов. Запрос состоит из параметров.
         
             Args:
                 params (dict): Словарь параметров запроса.
@@ -121,26 +123,39 @@ class FastApiHandler:
             Returns:
                 - **dict**: Словарь, содержащий результат выполнения запроса.
             """
-            try:
-                # валидируем запрос к API
-                if not self.validate_params(params):
-                    print("Error while handling request")
-                    response = {"Error": "Problem with parameters"}
-                else:
-                    model_params = params["model_params"]
-                    user_id = params["user_id"]
-                    print(f"Predicting for user_id: {user_id} and model_params:\n{model_params}")
-                    # получаем предсказания модели
-                    y_pred = self.real_estate_predict(model_params)
-                    response = {
-                            "user_id": user_id, 
-                            "prediction": y_pred
-                        }
-            except Exception as e:
-                print(f"Error while handling request: {e}")
-                return {"Error": "Problem with request"}
-            else:
-                return response
+
+        try:
+             response = self.process_request(params)
+        except Exception as e:
+             print(f"Error while handling request: {e}")
+             return {"Error": "Problem with request"}
+        else:
+             return response
+        
+    def process_request(self, params):
+        """Функция для получения предсказания.
+        
+            Args:
+                params (dict): Словарь параметров запроса.
+        
+            Returns:
+                - **dict**: Словарь, содержащий результат выполнения запроса.
+            """
+         # валидируем запрос к API
+        if not self.validate_params(params):
+             print("Error while handling request")
+             return {"Error": "Problem with parameters"}
+        
+        model_params = params["model_params"]
+        user_id = params["user_id"]
+        print(f"Predicting for user_id: {user_id} and model_params:\n{model_params}")
+        
+        # получаем предсказания модели
+        y_pred = self.real_estate_predict(model_params)
+        
+        return { 
+             "user_id": user_id, 
+             "prediction": y_pred}
             
 if __name__ == "__main__":
 
