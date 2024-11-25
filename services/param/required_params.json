@@ -1,0 +1,26 @@
+{
+    "required_model_params": [
+        "cat__building_type_int_4",
+        "cat__building_type_int_6",
+        "cat__building_type_int_1",
+        "cat__cluster_region_2",
+        "cat__cluster_region_1",
+        "exp(sqrt(distance_to_center) - sqrt(longitude))",
+        "num__rb__longitude",
+        "num__rb__ceiling_height",
+        "num__rb__floor",
+        "cat__cluster_region_3",
+        "cat__building_type_int_2",
+        "num__pol__1",
+        "num__pol__ceiling_height total_area",
+        "cat__building_type_int_3",
+        "num__kbd__total_area",
+        "exp(-distance_to_center + sqrt(longitude))",
+        "num__rb__build_year",
+        "num__pol__ceiling_height",
+        "num__pol__ceiling_height total_area^2",
+        "num__kbd__ceiling_height",
+        "num__pol__total_area^3",
+        "num__rb__flats_count"
+    ]
+}
